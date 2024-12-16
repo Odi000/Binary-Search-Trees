@@ -136,6 +136,20 @@ class Tree {
             return findSecondBiggest(node.right);
         }
     }
+
+    levelOrder(callback) {
+        const queue = [this.root];
+
+        recurse(callback);
+
+        function recurse(callback) {
+            callback(queue[0]);
+            if (queue[0].left) queue.push(queue[0].left);
+            if (queue[0].right) queue.push(queue[0].right);
+            queue.shift();
+            if (queue.length) recurse(callback);
+        }
+    }
 }
 
 function deleteDuplicates(arr) {
@@ -150,6 +164,8 @@ function deleteDuplicates(arr) {
     return arr;
 }
 
+//BST testing
+
 const exampleArr = [1, 7, 4, 23, 8, 9, 4, 3, 5, 7, 9, 67, 6345, 324];
 const peme = new Tree(exampleArr);
 
@@ -160,11 +176,15 @@ const peme = new Tree(exampleArr);
 // peme.insert(4.5);
 // peme.insert(4.4);
 
-console.log(prettyPrint(peme.root));
-while (peme.root.data) {
-    peme.deleteItem(peme.root.data);
-    console.log(prettyPrint(peme.root));
-}
+// console.log(prettyPrint(peme.root));
+// while (peme.root.data) {
+//     peme.deleteItem(peme.root.data);
+//     console.log(prettyPrint(peme.root));
+// }
+
+prettyPrint(peme.root)
+
+peme.levelOrder((node)=> console.log(node.data));
 
 function prettyPrint(node, prefix = "", isLeft = true) {
     if (node === null) {
