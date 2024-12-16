@@ -150,6 +150,16 @@ class Tree {
             if (queue.length) recurse(callback);
         }
     }
+
+    preOrder(callback) {
+        recurse(this.root);
+
+        function recurse(node){
+            callback(node);
+            if(node.left) recurse(node.left);
+            if(node.right) recurse(node.right);
+        }
+    }
 }
 
 function deleteDuplicates(arr) {
@@ -184,7 +194,9 @@ const peme = new Tree(exampleArr);
 
 prettyPrint(peme.root)
 
-peme.levelOrder((node)=> console.log(node.data));
+// peme.levelOrder((node)=> console.log(node.data));
+peme.preOrder((node)=> console.log(node.data));
+
 
 function prettyPrint(node, prefix = "", isLeft = true) {
     if (node === null) {
